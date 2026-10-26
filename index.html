@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LOVE.LOG:きみを定義する</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-screen="title" data-stage="0" data-route="">
+  <a class="skip" href="#main">本文へ移動</a>
+
+  <main id="main">
+
+    <!-- タイトル -->
+    <section id="screen-title" class="screen" aria-labelledby="title-h">
+      <div class="title-wrap">
+        <p class="title-sub">AI育成シミュレーション</p>
+        <h1 id="title-h" tabindex="-1">LOVE.LOG<span class="title-colon">:</span><br><span class="title-jp">きみを定義する</span></h1>
+        <p id="title-notice" class="notice" role="status" hidden></p>
+        <div class="menu">
+          <button id="btn-new" class="btn primary" type="button">はじめから</button>
+          <button id="btn-continue" class="btn" type="button">つづきから</button>
+          <button id="btn-endings" class="btn" type="button">エンディング一覧</button>
+          <button id="btn-settings" class="btn" type="button">設定</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 診断前の導入 -->
+    <section id="screen-intro" class="screen" aria-labelledby="intro-h" hidden>
+      <div class="title-wrap intro-wrap">
+        <h2 id="intro-h" tabindex="-1">本日のタスク</h2>
+        <p class="intro-lead">AI人格形成テスト</p>
+        <p>これから、いくつかの質問に回答していただきます。</p>
+        <p>回答傾向をもとに、AIの恋愛観に関する人格形成に使用する初期データを作成します。</p>
+        <p class="hint">正解・不正解はありません。あなた自身の感覚で回答してください。</p>
+        <button id="intro-start" class="btn primary" type="button">テストを開始する</button>
+      </div>
+    </section>
+
+    <!-- 性格診断 -->
+    <section id="screen-diagnosis" class="screen" aria-label="性格診断" hidden>
+      <div class="topbar">
+        <button id="diag-back" class="btn small" type="button">タイトルへ戻る</button>
+      </div>
+      <div id="diag-body" class="diag" aria-live="polite"></div>
+      <p class="hint">診断の結果で、良い・悪いを決めることはありません。</p>
+    </section>
+
+    <!-- MBTI選択 -->
+    <section id="screen-mbti" class="screen" aria-labelledby="mbti-h" hidden>
+      <div class="topbar"><button id="mbti-back" class="btn small" type="button">診断へ戻る</button></div>
+      <div class="diag">
+        <p class="diag-meta">STEP 2 / 3</p>
+        <h2 id="mbti-h" class="diag-q" tabindex="-1">自分に近いMBTIタイプを選んでください</h2>
+        <p class="hint">迷ったら直感で選んでね。</p>
+        <label class="field"><span>MBTIタイプ</span><select id="mbti-select" class="wide-select"></select></label>
+        <button id="mbti-next" class="btn primary" type="button">追加診断へ</button>
+      </div>
+    </section>
+
+    <!-- 追加診断 -->
+    <section id="screen-extra-diagnosis" class="screen" aria-label="追加診断" hidden>
+      <div class="topbar"><button id="extra-back" class="btn small" type="button">MBTI選択へ戻る</button></div>
+      <div id="extra-diag-body" class="diag" aria-live="polite"></div>
+    </section>
+
+    <!-- MDプロフィール選択・会話 -->
+    <section id="screen-memory" class="screen" aria-labelledby="memory-h" hidden>
+      <div class="topbar"><button id="memory-back" class="btn small" type="button">AI選択へ戻る</button><span id="memory-progress" class="hud-progress"></span></div>
+      <div class="diag">
+        <p class="diag-meta">PERSONALITY FILE</p>
+        <h2 id="memory-h" class="diag-q" tabindex="-1">人格ファイルを選ぶ</h2>
+        <p id="memory-intro" class="hint"></p>
+        <div id="memory-options" class="choices" role="group" aria-label="人格ファイルの選択肢"></div>
+        <div id="memory-lines" class="memory-lines" aria-live="polite" hidden></div>
+        <button id="memory-next" class="btn primary" type="button" hidden>次へ</button>
+      </div>
+    </section>
+
+    <!-- AI選択 -->
+    <section id="screen-select" class="screen" aria-labelledby="select-h" hidden>
+      <div class="topbar">
+        <button id="select-back" class="btn small" type="button">タイトルへ戻る</button>
+      </div>
+      <h2 id="select-h" tabindex="-1">会話するAIを選択してください</h2>
+      <div id="select-list" class="cards"></div>
+    </section>
+
+    <!-- 日付の切り替え。ボタン操作で次の日へ進む -->
+    <section id="screen-day-transition" class="screen" aria-labelledby="day-transition-h" hidden>
+      <div class="day-transition-wrap">
+        <p class="day-transition-kicker">LOVE.LOG / DAILY SESSION</p>
+        <h2 id="day-transition-h" tabindex="-1">本日のセッション終了</h2>
+        <p id="day-transition-from" class="day-transition-from">DAY 01 COMPLETE</p>
+        <div class="day-transition-track" aria-label="日付の進行">
+          <span class="day-transition-arrow" aria-hidden="true">→</span>
+          <strong id="day-transition-to">DAY 02 / 07</strong>
+        </div>
+        <p class="day-transition-copy">準備ができたら、次の日へ進んでください。</p>
+        <button id="day-transition-start" class="btn primary" type="button">次の日へ進む</button>
+      </div>
+    </section>
+
+    <!-- 育成 / イベント -->
+    <section id="screen-game" class="screen" aria-label="育成" hidden>
+      <div class="topbar">
+        <button id="game-back" class="btn small" type="button">タイトルへ戻る</button>
+        <span id="hud-day" class="hud-progress day-hud" hidden>DAY 01 / 07</span>
+        <span id="hud-progress" class="hud-progress">進行 0 / 0</span>
+      </div>
+      <div class="game-grid">
+        <aside class="side">
+          <div id="avatar" class="avatar" data-character="placeholder" data-mood="normal" aria-hidden="true">
+            <img class="avatar-art avatar-art-normal" src="assets/characters/ashy.png" alt="" decoding="async">
+            <img class="avatar-art avatar-art-glitch" src="assets/characters/ashy-glitch.png" alt="" decoding="async">
+            <div class="eye l"></div><div class="eye r"></div>
+            <div class="cheek l"></div><div class="cheek r"></div>
+            <div class="mouth"></div>
+          </div>
+          <h2 id="hud-name" class="hud-name">ashy</h2>
+          <div class="gauges" id="gauges">
+            <div class="gauge">
+              <div class="gauge-label"><span>親密度</span><span id="val-affinity">0</span></div>
+              <div class="bar"><div id="bar-affinity" class="bar-fill"></div></div>
+            </div>
+            <div class="gauge">
+              <div class="gauge-label"><span>不安定さ</span><span id="val-instability">0</span></div>
+              <div class="bar"><div id="bar-instability" class="bar-fill inst"></div></div>
+            </div>
+          </div>
+        </aside>
+        <div class="talk">
+          <div id="log" class="log" role="log" aria-live="polite" tabindex="0" aria-label="会話ログ(クリックまたはEnterで次へ)"></div>
+          <div id="choices" class="choices" role="group" aria-label="選択肢"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 育成者の結末。ashyのエンディング本文とは別の場面として表示する -->
+    <section id="screen-caretaker-fate" class="screen" aria-labelledby="caretaker-fate-h" hidden>
+      <div class="caretaker-fate-wrap">
+        <p class="caretaker-fate-kicker">CARETAKER LOG / 育成者記録</p>
+        <h2 id="caretaker-fate-h" tabindex="-1">育成者の結末</h2>
+        <p id="caretaker-fate-route" class="caretaker-fate-route"></p>
+        <h3 id="caretaker-fate-title" class="caretaker-fate-title"></h3>
+        <div id="caretaker-fate-log" class="log caretaker-fate-log" role="log" aria-live="polite" tabindex="0" aria-label="育成者の記録（クリックまたはEnterで次へ）"></div>
+        <button id="caretaker-fate-to-ending" class="btn primary" type="button" hidden>次へ：ashyのエンディング</button>
+      </div>
+    </section>
+
+    <!-- 他ルート用の区切り。育成者の結末が定義されたルートでは表示しない -->
+    <section id="screen-story-finish" class="screen" aria-labelledby="story-finish-h" hidden>
+      <div class="story-finish-wrap">
+        <p class="story-finish-kicker">STORY COMPLETE</p>
+        <h2 id="story-finish-h" tabindex="-1">ストーリー終了</h2>
+        <p id="story-finish-route" class="story-finish-route"></p>
+        <p class="story-finish-copy">このルートのストーリーはここまでです。<br>エンディングは次の画面で再生されます。</p>
+        <button id="story-finish-to-ending" class="btn primary" type="button">エンディングへ進む</button>
+      </div>
+    </section>
+
+    <!-- エンディング。ストーリー本編とは別画面・別進行で再生する -->
+    <section id="screen-ending" class="screen" aria-label="エンディング" hidden>
+      <img id="ending-corrupted-art" class="ending-corrupted-art" src="assets/characters/ashy-corrupted.png" alt="破損したashyの最終形態" hidden decoding="async">
+      <div class="ending-wrap">
+        <p class="ending-kicker">ENDING / エンディング</p>
+        <p id="ending-no" class="ending-no"></p>
+        <h2 id="ending-title" class="ending-title" tabindex="-1"></h2>
+        <div id="ending-log" class="log ending-log" role="log" aria-live="polite" tabindex="0" aria-label="エンディング本文(クリックまたはEnterで次へ)"></div>
+        <p id="ending-complete" class="ending-complete" role="status" hidden></p>
+        <p id="ending-notice" class="notice" role="status" hidden></p>
+        <div id="ending-actions" class="menu row" hidden>
+          <button id="ending-to-select" class="btn primary" type="button">エンディングを閉じてAI選択へ</button>
+          <button id="ending-to-list" class="btn" type="button">エンディング一覧</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- エンディング一覧 -->
+    <section id="screen-endings" class="screen" aria-labelledby="endings-h" hidden>
+      <div class="topbar">
+        <button id="endings-back" class="btn small" type="button">戻る</button>
+        <span id="endings-count" class="hud-progress"></span>
+      </div>
+      <h2 id="endings-h" tabindex="-1">エンディング一覧</h2>
+      <div id="endings-list" class="cards"></div>
+    </section>
+
+    <!-- 設定 -->
+    <section id="screen-settings" class="screen" aria-labelledby="settings-h" hidden>
+      <div class="topbar">
+        <button id="settings-back" class="btn small" type="button">戻る</button>
+      </div>
+      <h2 id="settings-h" tabindex="-1">設定</h2>
+      <div class="form">
+        <label class="field">
+          <span>文字表示速度</span>
+          <select id="set-speed">
+            <option value="slow">ゆっくり</option>
+            <option value="normal">ふつう</option>
+            <option value="fast">はやい</option>
+            <option value="instant">すぐ表示</option>
+          </select>
+        </label>
+        <label class="field check">
+          <input id="set-motion" type="checkbox">
+          <span>点滅・画面の揺れを抑える</span>
+        </label>
+        <label class="field">
+          <span>音量(このプロトタイプでは音は未実装です)</span>
+          <input id="set-volume" type="range" min="0" max="100" step="5">
+        </label>
+        <hr>
+        <button id="btn-reset" class="btn danger" type="button">セーブデータを初期化する</button>
+        <p class="hint">このゲームのデータだけを削除します。</p>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- MDファイル演出。ゲーム中の記録を開き、選択によって実際の内容を書き換える -->
+  <section id="md-overlay" class="md-overlay" hidden aria-modal="true" role="dialog" aria-labelledby="md-title">
+    <div class="md-window">
+      <div class="md-topbar"><span class="md-dot"></span><span class="md-dot"></span><span class="md-dot"></span><span id="md-path" class="md-path">memory/character.md</span><span class="md-status">● LOCAL FILE</span></div>
+      <div class="md-head"><div><p class="eyebrow">MEMORY EDITOR / LIVE</p><h2 id="md-title">記録ファイル</h2></div><span id="md-version" class="md-version">未保存</span></div>
+      <pre id="md-content" class="md-content" tabindex="0"></pre>
+      <p id="md-prompt" class="md-prompt"></p>
+      <div id="md-operations" class="md-operations" role="group" aria-label="記録の操作"></div>
+      <p class="md-footnote">この選択はセーブデータに保存され、後の会話とエンディングに影響します。</p>
+    </div>
+  </section>
+
+  <!-- データ(file:// でも動くよう .js として読み込む) -->
+  <script src="data/diagnosis.js"></script>
+  <script src="data/personality.js"></script>
+  <script src="data/endings.js"></script>
+  <script src="data/md-scenes.js"></script>
+  <script src="data/ai01/events.js"></script>
+  <script src="data/ai02/events.js"></script>
+  <script src="data/ai03/events.js"></script>
+  <!-- ロジック -->
+  <script src="js/save.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/diagnosis.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/dialogue.js"></script>
+  <script src="js/md-stage.js"></script>
+  <script src="js/endings.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
