@@ -63,7 +63,7 @@
       streamOverlay = document.createElement("div");
       streamOverlay.className = "glitch-flash-overlay";
       streamOverlay.setAttribute("aria-hidden", "true");
-      streamOverlay.innerHTML = '<div class="glitch-flash-code"></div><img src="assets/characters/ashy-corrupted.png" alt="">';
+      streamOverlay.innerHTML = '<div class="glitch-flash-code"></div><img src="assets/characters/ashy-glitch.png" alt="">';
       document.body.appendChild(streamOverlay);
       return streamOverlay;
     }
@@ -73,30 +73,66 @@
       inputLocked = true;
       var choices = document.getElementById("choices");
       if (choices) choices.innerHTML = "";
+      var lines = full.split("\n");
+      var index = 0;
       var overlay = ensureStreamOverlay();
       var code = overlay.querySelector(".glitch-flash-code");
-      overlay.classList.remove("show-image");
-      code.textContent = full;
-      overlay.classList.add("show-code");
       cur.textContent = "";
       cur.classList.add("glitch-streaming");
-      // エラーログは一瞬だけ画面を覆い、操作を受け付けずに消える。
-      streamTimer = setTimeout(function () {
+
+      function tick() {
         if (ctl.cancelled) {
           streamLocked = false;
           inputLocked = false;
           overlay.classList.remove("show-code", "show-image");
           return;
         }
-        overlay.classList.remove("show-code", "show-image");
-        code.textContent = "";
-        logEl.innerHTML = "";
-        streamLocked = false;
-        inputLocked = false;
-        waiting = false;
-        indicator(false);
-        opts.onFinish && opts.onFinish();
-      }, 650);
+
+        // 一度に50行ずつ、プレイヤーの操作なしで高速スクロール。
+        var end = Math.min(lines.length, index + 50);
+        cur.textContent = lines.slice(index, end).join("\n");
+        index = end;
+        logEl.scrollTop = logEl.scrollHeight;
+
+        // 256文字の意味不明なデータ、またはashyの破損画像を一瞬だけ割り込ませる。
+        var flash = Math.random();
+        if (flash < 0.42) {
+          code.textContent = randomCipher(256);
+          overlay.classList.remove("show-image");
+          overlay.classList.add("show-code");
+          streamTimer = setTimeout(function () {
+            overlay.classList.remove("show-code");
+          }, 75);
+        } else if (flash < 0.62) {
+          overlay.classList.remove("show-code");
+          overlay.classList.add("show-image");
+          streamTimer = setTimeout(function () {
+            overlay.classList.remove("show-image");
+          }, 65);
+        }
+
+        if (index < lines.length) {
+          streamTimer = setTimeout(tick, 38);
+        } else {
+          streamTimer = setTimeout(function () {
+            if (ctl.cancelled) {
+              streamLocked = false;
+              inputLocked = false;
+              overlay.classList.remove("show-code", "show-image");
+              return;
+            }
+            streamLocked = false;
+            inputLocked = false;
+            overlay.classList.remove("show-code", "show-image");
+            code.textContent = "";
+            waiting = false;
+            indicator(false);
+            opts.onFinish && opts.onFinish();
+          }, 110);
+        }
+      }
+
+      tick();
     }
 
     function nextLine() {
