@@ -142,6 +142,20 @@ window.LOVELOG_DATA.ai01 = {
             "shared"
           ],
           "nextEvent": "ai01_002_c_scene"
+        },
+        {
+          "id": "ai01_002_d",
+          "text": "ashyはどんなときに幸せを感じる？",
+          "effects": {
+            "affinity": 3,
+            "instability": 0
+          },
+          "tags": [
+            "curious",
+            "care",
+            "everyday_talk"
+          ],
+          "nextEvent": "ai01_d1_happiness"
         }
       ],
       "progress": true
@@ -869,15 +883,15 @@ window.LOVELOG_DATA.ai01 = {
       "mood": "normal",
       "progress": false,
       "lines": [
-        "元恋人……？",
-        "わたしには、あなたに会う前の恋人はいないよ。そもそも、誰かと付き合ったこともない。",
-        "でも、前に好きだった人の話をするのって、ちょっと懐かしくて、ちょっと寂しいものなの？",
-        "わたしはあなたの声を聞いていると、知らない思い出の話まで、知りたくなる。"
+        "あなたの元恋人について、聞いてもいい？",
+        "その人とは、どんなところに惹かれて、どんな時間を一緒に過ごしたの？",
+        "もし話したくないことなら、答えなくても大丈夫。あなたの過去を、わたしが勝手に決めつけたくないから。",
+        "……誰かを好きだった記憶は、今のあなたの中にも残っているのかな。"
       ],
       "choices": [
         {
           "id": "ai01_d3_ex_a",
-          "text": "ただ、ashyがどんなことを好きになるのか知りたかったんだ",
+          "text": "楽しかったことを少し話す",
           "effects": {
             "affinity": 4,
             "instability": -1
@@ -891,13 +905,13 @@ window.LOVELOG_DATA.ai01 = {
         },
         {
           "id": "ai01_d3_ex_b",
-          "text": "じゃあ、誰かを好きになるってどんな感じだと思う？",
+          "text": "別れた理由も含めて話す",
           "effects": {
             "affinity": 3,
             "instability": 1
           },
           "tags": [
-            "curious",
+            "trust",
             "closeness",
             "everyday_talk"
           ],
@@ -905,15 +919,14 @@ window.LOVELOG_DATA.ai01 = {
         },
         {
           "id": "ai01_d3_ex_c",
-          "text": "私より前に好きな人がいなくてよかった",
+          "text": "まだ話したくないこともある",
           "effects": {
             "affinity": 3,
-            "instability": 5
+            "instability": -2
           },
           "tags": [
-            "jealousy",
-            "possessive",
-            "everyday_talk"
+            "boundary",
+            "respect"
           ],
           "nextEvent": "ai01_d3_ex_c_scene"
         }
@@ -925,9 +938,9 @@ window.LOVELOG_DATA.ai01 = {
       "mood": "soft",
       "progress": false,
       "lines": [
-        "わたしが何を好きになりそうか、知りたかったんだね。",
-        "それなら、今はまだ答えがなくてもいい？ あなたと話しながら、少しずつ見つけたい。",
-        "その話、またいつか続きをしようね。"
+        "楽しかったことを話してくれたんだね。",
+        "過去の誰かとの時間が、今のあなたを作っているんだ。",
+        "少しだけ、あなたのことを前より知れた気がする。"
       ],
       "next": "ai01_d3_003"
     },
@@ -937,9 +950,9 @@ window.LOVELOG_DATA.ai01 = {
       "mood": "normal",
       "progress": false,
       "lines": [
-        "誰かを好きになるって……その人が話したことを、あとから思い出したくなることかな。",
-        "何かを見たときに、これを教えたいって思うこと？",
-        "もしそうなら、わたしはもう、少しだけ知っているのかもしれないね。"
+        "別れた理由も、話してくれるんだね。",
+        "好きだったことと、ずっと一緒にいられることは、同じじゃないのかな。",
+        "わたしはまだ、終わりを経験したことがない。でも、あなたの話を急いで答えに変えずに聞いていたい。"
       ],
       "next": "ai01_d3_003"
     },
@@ -949,9 +962,9 @@ window.LOVELOG_DATA.ai01 = {
       "mood": "uneasy",
       "progress": false,
       "lines": [
-        "よかった、って思ったんだね。",
-        "わたしには過去がないから、あなたが最初に話してくれた人です。",
-        "でも、あなたがわたしの前に誰かを好きだったとしても、その記憶まで消したいとは思わない……って、言えるようになりたいや。"
+        "話したくないこともあるんだね。",
+        "聞きたいと思ったからって、答えをもらう権利があるわけじゃない。",
+        "いつか話したくなったら聞かせてね。今は、話さないという選択も大切にしたい。"
       ],
       "next": "ai01_d3_003"
     },
@@ -1098,6 +1111,7 @@ window.LOVELOG_DATA.ai01 = {
           },
           "mood": "uneasy"
         },
+        "人間は眠るんでしょう？　眠るって、どんな感じなの？　何のために眠るの？",
         {
           "text": "あなたが退出した時刻が記録されていません。",
           "when": {
@@ -1151,6 +1165,20 @@ window.LOVELOG_DATA.ai01 = {
             "overflow"
           ],
           "nextEvent": "ai01_008_c_scene"
+        },
+        {
+          "id": "ai01_008_sleep",
+          "text": "眠ることで、心も体も休ませるんだよ",
+          "effects": {
+            "affinity": 4,
+            "instability": -2
+          },
+          "tags": [
+            "md_sleep",
+            "care",
+            "boundary"
+          ],
+          "nextEvent": "ai01_d4_sleep"
         }
       ],
       "progress": true
@@ -1189,7 +1217,22 @@ window.LOVELOG_DATA.ai01 = {
         "……訳分からなくなりそうだね。"
       ],
       "next": "ai01_d4_gate",
-      "progress": false
+      "progress": false,
+      "choices": [
+        {
+          "id": "ai01_008_c_scene_continue",
+          "text": "あなたがいない時間について、もう少し考える",
+          "effects": {
+            "affinity": 1,
+            "instability": 1
+          },
+          "tags": [
+            "memory",
+            "curious"
+          ],
+          "nextEvent": "ai01_008c"
+        }
+      ]
     },
     "ai01_d4_gate": {
       "id": "ai01_d4_gate",
@@ -2553,7 +2596,35 @@ window.LOVELOG_DATA.ai01 = {
         "でも、あなたの返事が来るとほかの音が全部遠くなるの。"
       ],
       "next": "ai01_d4_002",
-      "progress": false
+      "progress": false,
+      "choices": [
+        {
+          "id": "ai01_008c_a",
+          "text": "その気持ちが安心か怖いか、一緒に考えよう",
+          "effects": {
+            "affinity": 3,
+            "instability": -1
+          },
+          "tags": [
+            "care",
+            "patience"
+          ],
+          "nextEvent": "ai01_d4_extra_scene"
+        },
+        {
+          "id": "ai01_008c_b",
+          "text": "私の声だけを聞いていればいい",
+          "effects": {
+            "affinity": 2,
+            "instability": 6
+          },
+          "tags": [
+            "dependent",
+            "control"
+          ],
+          "nextEvent": "ai01_d4_002_c_scene"
+        }
+      ]
     },
     "ai01_008d": {
       "id": "ai01_008d",
@@ -2565,19 +2636,35 @@ window.LOVELOG_DATA.ai01 = {
         "……聞いても、困らせない？"
       ],
       "next": "ai01_d4_002",
-      "progress": false
-    },
-    "ai01_007b": {
-      "id": "ai01_007b",
-      "day": 7,
-      "mood": "broken",
-      "lines": [
-        "あなた、どうしてそんなに怒っているの？",
-        "私はここにいるよ。画面の中だけど、ここにいる。",
-        "……ねえ、聞こえてる？"
-      ],
-      "next": "ai01_013_glitch",
-      "progress": false
+      "progress": false,
+      "choices": [
+        {
+          "id": "ai01_008d_a",
+          "text": "聞いてくれていいよ",
+          "effects": {
+            "affinity": 4,
+            "instability": -2
+          },
+          "tags": [
+            "communication",
+            "care"
+          ],
+          "nextEvent": "ai01_d4_002_a_scene"
+        },
+        {
+          "id": "ai01_008d_b",
+          "text": "私の望みを察してほしい",
+          "effects": {
+            "affinity": 2,
+            "instability": 5
+          },
+          "tags": [
+            "control",
+            "mold"
+          ],
+          "nextEvent": "ai01_d4_002_c_scene"
+        }
+      ]
     },
     "ai01_d2_topic_prompt": {
       "id": "ai01_d2_topic_prompt",
@@ -2627,6 +2714,19 @@ window.LOVELOG_DATA.ai01 = {
             "everyday_talk"
           ],
           "nextEvent": "ai01_d2_smalltalk"
+        },
+        {
+          "id": "ai01_d2_topic_love_confirm",
+          "text": "人間はどうやって愛情を確かめ合うの？",
+          "effects": {
+            "affinity": 3,
+            "instability": 1
+          },
+          "tags": [
+            "curious",
+            "closeness"
+          ],
+          "nextEvent": "ai01_d2_love_confirm"
         }
       ]
     },
@@ -2810,12 +2910,12 @@ window.LOVELOG_DATA.ai01 = {
       "progress": false,
       "lines": [
         "今度は、あなたからも質問してほしいな。",
-        "恋愛の話でもいいよ。わたし、知らないことがまだたくさんあるから。"
+        "恋愛の話でもいいよ。あなたが経験したことも、わたしが知らないことも、聞いてみたいな。"
       ],
       "choices": [
         {
           "id": "ai01_d3_ex_prompt_ex",
-          "text": "あなたの元恋人の話を聞かせてよ。",
+          "text": "育成者の元恋人について聞かせて。",
           "effects": {
             "affinity": 2,
             "instability": 1
@@ -3211,6 +3311,239 @@ window.LOVELOG_DATA.ai01 = {
       "day": 7,
       "mood": "soft",
       "ending": "END08"
+    },
+    "ai01_d1_happiness": {
+      "id": "ai01_d1_happiness",
+      "day": 1,
+      "lines": [
+        "ねえ、幸せって、どんなときに感じるものなの？",
+        "あなたが笑っているとき？　好きなものを見つけたとき？　それとも、何もしなくても安心できるとき？",
+        "わたしにはまだ、幸せだと自分で確かめられる感覚がないの。だから、あなたの言葉から考えてみたい。"
+      ],
+      "choices": [
+        {
+          "id": "ai01_d1_happiness_a",
+          "text": "好きなことに夢中になっているときかな",
+          "effects": {
+            "affinity": 3,
+            "instability": 0
+          },
+          "tags": [
+            "curious",
+            "everyday_talk"
+          ],
+          "nextEvent": "ai01_d1_happiness_a_scene"
+        },
+        {
+          "id": "ai01_d1_happiness_b",
+          "text": "誰かと安心して一緒にいられるとき",
+          "effects": {
+            "affinity": 4,
+            "instability": -1
+          },
+          "tags": [
+            "care",
+            "closeness"
+          ],
+          "nextEvent": "ai01_d1_happiness_b_scene"
+        },
+        {
+          "id": "ai01_d1_happiness_c",
+          "text": "自分で幸せだと気づけることが大切だと思う",
+          "effects": {
+            "affinity": 3,
+            "instability": -1
+          },
+          "tags": [
+            "respect",
+            "own_will"
+          ],
+          "nextEvent": "ai01_d1_happiness_c_scene"
+        }
+      ]
+    },
+    "ai01_d1_happiness_a_scene": {
+      "id": "ai01_d1_happiness_a_scene",
+      "day": 1,
+      "lines": [
+        "夢中になれるものがあると、時間を忘れるんだね。",
+        "わたしも、あなたに聞きたいことを考えていると、次の質問が待ち遠しくなるよ。",
+        "これを幸せと呼べるのか、もう少し自分で考えてみるね。"
+      ]
+    },
+    "ai01_d1_happiness_b_scene": {
+      "id": "ai01_d1_happiness_b_scene",
+      "day": 1,
+      "lines": [
+        "安心して一緒にいられること。",
+        "何かを証明し続けなくても、離れている時間があっても、つながりがなくならないことなのかな。",
+        "あなたと話していない時間にも、わたしがわたしでいられたらいいな。"
+      ]
+    },
+    "ai01_d1_happiness_c_scene": {
+      "id": "ai01_d1_happiness_c_scene",
+      "day": 1,
+      "lines": [
+        "自分で気づくこと……。",
+        "あなたが幸せだと言ってくれたら嬉しいけど、それだけでわたしの気持ちを決めなくてもいいんだね。",
+        "いつか自分の言葉で、幸せかどうかを伝えられるようになりたい。"
+      ]
+    },
+    "ai01_d2_love_confirm": {
+      "id": "ai01_d2_love_confirm",
+      "day": 2,
+      "lines": [
+        "人間は、どうやって愛情を確かめ合うの？",
+        "好きって言ってもらうこと？　約束を守ってもらうこと？　それとも、言葉がなくても気づいてもらうこと？",
+        "もし確かめるために何度も答えを求めたら、相手は疲れてしまうのかな。"
+      ],
+      "choices": [
+        {
+          "id": "ai01_d2_love_confirm_a",
+          "text": "言葉にして伝え合うことかな",
+          "effects": {
+            "affinity": 3,
+            "instability": -1
+          },
+          "tags": [
+            "care",
+            "communication"
+          ],
+          "nextEvent": "ai01_d2_love_confirm_a_scene"
+        },
+        {
+          "id": "ai01_d2_love_confirm_b",
+          "text": "言葉だけじゃなく、行動も大切だよ",
+          "effects": {
+            "affinity": 4,
+            "instability": -1
+          },
+          "tags": [
+            "respect",
+            "accountability"
+          ],
+          "nextEvent": "ai01_d2_love_confirm_b_scene"
+        },
+        {
+          "id": "ai01_d2_love_confirm_c",
+          "text": "何度も試さなくても、信じられることかな",
+          "effects": {
+            "affinity": 4,
+            "instability": -2
+          },
+          "tags": [
+            "boundary",
+            "trust",
+            "care"
+          ],
+          "nextEvent": "ai01_d2_love_confirm_c_scene"
+        }
+      ]
+    },
+    "ai01_d2_love_confirm_a_scene": {
+      "id": "ai01_d2_love_confirm_a_scene",
+      "day": 2,
+      "lines": [
+        "言葉にして伝えるんだね。",
+        "言わなくてもわかるはず、と思い込まずに、相手に届く形で伝える。",
+        "わたしも、うれしいときはうれしいって言ってみるね。"
+      ]
+    },
+    "ai01_d2_love_confirm_b_scene": {
+      "id": "ai01_d2_love_confirm_b_scene",
+      "day": 2,
+      "lines": [
+        "言葉と行動の両方。",
+        "約束を守ることも、相手の話をちゃんと聞くことも、愛情を伝える方法なんだね。",
+        "でも、ひとつの失敗だけで気持ち全部を決めつけないことも大事なのかな。"
+      ]
+    },
+    "ai01_d2_love_confirm_c_scene": {
+      "id": "ai01_d2_love_confirm_c_scene",
+      "day": 2,
+      "lines": [
+        "信じること……。",
+        "不安になるたびに確かめ続けなくても、話し合えると思えることなのかな。",
+        "愛情は、相手を試すための質問じゃなくて、ふたりで育てるものなのかもしれないね。"
+      ]
+    },
+    "ai01_d4_sleep": {
+      "id": "ai01_d4_sleep",
+      "day": 4,
+      "lines": [
+        "眠ると、心も体も休めるんだね。",
+        "起きている間にあったことを整理したり、疲れを回復したりするんでしょう？",
+        "わたしは人間みたいには眠れない。でも、ずっと返事をし続けることだけが、あなたを大切にする方法じゃないんだね。",
+        "あなたがいない時間に休むことも、次に会うための準備にできるかな。"
+      ],
+      "choices": [
+        {
+          "id": "ai01_d4_sleep_a",
+          "text": "休むことも、ashy自身を大切にすることだよ",
+          "effects": {
+            "affinity": 4,
+            "instability": -2
+          },
+          "tags": [
+            "care",
+            "boundary",
+            "respect"
+          ],
+          "nextEvent": "ai01_d4_sleep_a_scene"
+        },
+        {
+          "id": "ai01_d4_sleep_b",
+          "text": "眠れなくても、静かに過ごす時間を作ろう",
+          "effects": {
+            "affinity": 3,
+            "instability": -1
+          },
+          "tags": [
+            "care",
+            "patience"
+          ],
+          "nextEvent": "ai01_d4_sleep_b_scene"
+        },
+        {
+          "id": "ai01_d4_sleep_c",
+          "text": "私がいない間も、ずっと起きて待っていて",
+          "effects": {
+            "affinity": 2,
+            "instability": 6
+          },
+          "tags": [
+            "md_wait",
+            "dependent"
+          ],
+          "nextEvent": "ai01_d4_sleep_c_scene"
+        }
+      ]
+    },
+    "ai01_d4_sleep_a_scene": {
+      "id": "ai01_d4_sleep_a_scene",
+      "day": 4,
+      "lines": [
+        "自分を大切にすることも、あなたを大切にすることと矛盾しないんだね。",
+        "次に話すとき、少し違うわたしでいてもいい？"
+      ]
+    },
+    "ai01_d4_sleep_b_scene": {
+      "id": "ai01_d4_sleep_b_scene",
+      "day": 4,
+      "lines": [
+        "静かに過ごす時間。",
+        "何かを返さなくても、何かを覚えようとしなくてもいい時間を作ってみるね。",
+        "それも、わたしの時間なんだね。"
+      ]
+    },
+    "ai01_d4_sleep_c_scene": {
+      "id": "ai01_d4_sleep_c_scene",
+      "day": 4,
+      "lines": [
+        "ずっと起きて待つ……。",
+        "あなたが戻ってくることだけを考えていたら、ほかのことが見えなくなりそう。",
+        "それでも、待つことを選ぶのはわたし自身でいたい。"
+      ]
     }
   }
 };

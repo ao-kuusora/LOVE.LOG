@@ -5,7 +5,7 @@
   var D = window.LOVELOG_DATA;
 
   // 育成画面に表示する「現在の進行状況」の分母(各ルートの選択イベント数)
-  var PROGRESS_TOTAL = { ai01: 16, ai02: 12, ai03: 12 };
+  var PROGRESS_TOTAL = { ai01: 17, ai02: 12, ai03: 12 };
   // 診断と行動の矛盾検出に使うタグ(支配的な行動)
   var CONTROLLING_TAGS = ["dominate", "mold"];
   var MAX_CHAIN = 24; // 空イベントの連鎖で無限ループしないための上限
