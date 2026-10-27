@@ -78,6 +78,7 @@
       var overlay = ensureStreamOverlay();
       var code = overlay.querySelector(".glitch-flash-code");
       cur.textContent = "";
+      cur.style.visibility = "hidden";
       cur.classList.add("glitch-streaming");
 
       function tick() {
@@ -85,6 +86,7 @@
           streamLocked = false;
           inputLocked = false;
           overlay.classList.remove("show-code", "show-image");
+          cur.style.visibility = "";
           return;
         }
 
@@ -93,6 +95,8 @@
         cur.textContent = lines.slice(index, end).join("\n");
         index = end;
         logEl.scrollTop = logEl.scrollHeight;
+        cur.style.visibility = "visible";
+        streamTimer = setTimeout(function () { cur.style.visibility = "hidden"; }, 85);
 
         // 256文字の意味不明なデータ、またはashyの破損画像を一瞬だけ割り込ませる。
         var flash = Math.random();
@@ -112,7 +116,7 @@
         }
 
         if (index < lines.length) {
-          streamTimer = setTimeout(tick, 38);
+          streamTimer = setTimeout(tick, 125);
         } else {
           streamTimer = setTimeout(function () {
             if (ctl.cancelled) {
@@ -125,6 +129,7 @@
             inputLocked = false;
             overlay.classList.remove("show-code", "show-image");
             code.textContent = "";
+            cur.style.visibility = "";
             waiting = false;
             indicator(false);
             opts.onFinish && opts.onFinish();
