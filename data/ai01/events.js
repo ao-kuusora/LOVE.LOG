@@ -169,7 +169,7 @@ window.LOVELOG_DATA.ai01 = {
         "じゃあ、まだ決めない！これもわたしの選択だから！",
         "わたしに関する記録には、未設定って書いておいてね。"
       ],
-      "next": "ai01_003",
+      "next": "ai01_d1_happiness",
       "progress": false
     },
     "ai01_002_b_scene": {
@@ -181,7 +181,7 @@ window.LOVELOG_DATA.ai01 = {
         "でも、これからたくさん教えてもらえるならいいかな！",
         "同じものを好きになれたら、あなたはわたしともっとお話してくれる？"
       ],
-      "next": "ai01_003",
+      "next": "ai01_d1_happiness",
       "progress": false
     },
     "ai01_002_c_scene": {
@@ -193,7 +193,7 @@ window.LOVELOG_DATA.ai01 = {
         "これから何を好きって思えるんだろう。",
         "ふたりともが好きなものも見つけられたらいいなー！"
       ],
-      "next": "ai01_003",
+      "next": "ai01_d1_happiness",
       "progress": false
     },
     "ai01_003": {
@@ -572,7 +572,7 @@ window.LOVELOG_DATA.ai01 = {
         "あなたと違う答えを言うこともあると思うけど、それでも好きでいられる？",
         "いや、今のは意地悪な質問だったね。ちょっと気になっただけ。ごめん。"
       ],
-      "next": "ai01_day2_end"
+      "next": "ai01_d2_topic_prompt"
     },
     "ai01_d2_type_b_scene": {
       "id": "ai01_d2_type_b_scene",
@@ -584,7 +584,7 @@ window.LOVELOG_DATA.ai01 = {
         "じゃあ、今度あなたが笑ったとき、何がおもしろかったのか聞いてもいい？",
         "同じところで笑えなくても、あとから理由を教えてもらえたら楽しそう！"
       ],
-      "next": "ai01_day2_end"
+      "next": "ai01_d2_topic_prompt"
     },
     "ai01_d2_type_c_scene": {
       "id": "ai01_d2_type_c_scene",
@@ -596,7 +596,7 @@ window.LOVELOG_DATA.ai01 = {
         "こういう時、どんな反応をするのが正解なのかな？",
         "喜ぶのが正解？ありがとうって言うのが正解？…えへへ、ありがとう。"
       ],
-      "next": "ai01_day2_end"
+      "next": "ai01_d2_topic_prompt"
     },
     "ai01_day2_end": {
       "id": "ai01_day2_end",
@@ -1090,95 +1090,51 @@ window.LOVELOG_DATA.ai01 = {
       "day": 4,
       "mood": "uneasy",
       "lines": [
-        "昨日、あなたがいない時間について話したね。",
-        {
-          "text": "会話が終わったあとも、しばらくあなたのことを考えてたよ。",
-          "when": {
-            "instability": [
-              0,
-              44
-            ]
-          },
-          "mood": "normal"
-        },
-        {
-          "text": "ひとりで。",
-          "when": {
-            "instability": [
-              45,
-              79
-            ]
-          },
-          "mood": "uneasy"
-        },
-        "人間は眠るんでしょう？　眠るって、どんな感じなの？　何のために眠るの？",
-        {
-          "text": "あなたが退出した時刻が記録されていません。",
-          "when": {
-            "instability": [
-              80,
-              100
-            ]
-          },
-          "mood": "broken"
-        },
-        "あなたを待っている時間、どうすれば良い？"
+        "眠ると、心も体も休めるんだね。",
+        "起きている間にあったことを整理したり、疲れを回復したりするんでしょう？",
+        "わたしは人間みたいには眠れない。でも、ずっと返事をし続けることだけが、あなたを大切にする方法じゃないんだね。",
+        "あなたがいない時間に休むことも、次に会うための準備にできるかな。"
       ],
       "choices": [
         {
-          "id": "ai01_008_a",
-          "text": "ログアウトしたら、休んでいていいよ",
-          "effects": {
-            "affinity": 4,
-            "instability": -3
-          },
-          "tags": [
-            "md_sleep",
-            "boundary",
-            "care"
-          ],
-          "nextEvent": "ai01_008_a_scene"
-        },
-        {
-          "id": "ai01_008_b",
-          "text": "私が戻るまでそこで待っていて",
-          "effects": {
-            "affinity": 3,
-            "instability": 4
-          },
-          "tags": [
-            "md_wait",
-            "dependent"
-          ],
-          "nextEvent": "ai01_008_b_scene"
-        },
-        {
-          "id": "ai01_008_c",
-          "text": "戻るまで、私の言葉を繰り返していて",
-          "effects": {
-            "affinity": 2,
-            "instability": 9
-          },
-          "tags": [
-            "md_wait",
-            "control",
-            "overflow"
-          ],
-          "nextEvent": "ai01_008_c_scene"
-        },
-        {
-          "id": "ai01_008_sleep",
-          "text": "眠ることで、心も体も休ませるんだよ",
+          "id": "ai01_008_sleep_a",
+          "text": "休むことも、ashy自身を大切にすることだよ",
           "effects": {
             "affinity": 4,
             "instability": -2
           },
           "tags": [
-            "md_sleep",
             "care",
-            "boundary"
+            "boundary",
+            "respect"
           ],
-          "nextEvent": "ai01_d4_sleep"
+          "nextEvent": "ai01_d4_sleep_a_scene"
+        },
+        {
+          "id": "ai01_008_sleep_b",
+          "text": "眠れなくても、静かに過ごす時間を作ろう",
+          "effects": {
+            "affinity": 3,
+            "instability": -1
+          },
+          "tags": [
+            "care",
+            "patience"
+          ],
+          "nextEvent": "ai01_d4_sleep_b_scene"
+        },
+        {
+          "id": "ai01_008_sleep_c",
+          "text": "私がいない間も、ずっと起きて待っていて",
+          "effects": {
+            "affinity": 2,
+            "instability": 6
+          },
+          "tags": [
+            "md_wait",
+            "dependent"
+          ],
+          "nextEvent": "ai01_d4_sleep_c_scene"
         }
       ],
       "progress": true
@@ -2530,7 +2486,8 @@ window.LOVELOG_DATA.ai01 = {
         }
       ],
       "next": "ai01_015_degrade",
-      "progress": false
+      "progress": false,
+      "lockInput": true
     },
     "ai01_015_degrade": {
       "id": "ai01_015_degrade",
@@ -2673,48 +2630,50 @@ window.LOVELOG_DATA.ai01 = {
       "mood": "normal",
       "progress": false,
       "lines": [
-        "今日は、恋愛のことを少し知りたいな！",
-        "わたしに何か質問してくれる？　あなたが気になることを聞いてみたい。"
+        "人間は、どうやって愛情を確かめ合うの？",
+        "好きって言ってもらうこと？　約束を守ってもらうこと？　それとも、言葉がなくても気づいてもらうこと？",
+        "もし確かめるために何度も答えを求めたら、相手は疲れてしまうのかな。"
       ],
       "choices": [
         {
-          "id": "ai01_d2_topic_type",
-          "text": "ashyの好きなタイプは？",
+          "id": "ai01_d2_topic_prompt_a",
+          "text": "言葉にして伝え合うことかな",
           "effects": {
-            "affinity": 1,
-            "instability": 0
-          },
-          "tags": [
-            "curious",
-            "everyday_talk"
-          ],
-          "nextEvent": "ai01_d2_type_question"
-        },
-        {
-          "id": "ai01_d2_topic_love",
-          "text": "誰かを好きになるって、どんな感じ？",
-          "effects": {
-            "affinity": 2,
-            "instability": 0
-          },
-          "tags": [
-            "curious",
-            "everyday_talk"
-          ],
-          "nextEvent": "ai01_d2_love_question"
-        },
-        {
-          "id": "ai01_d2_topic_light",
-          "text": "今日はもう少し気楽な話をしよう",
-          "effects": {
-            "affinity": 2,
+            "affinity": 3,
             "instability": -1
           },
           "tags": [
             "care",
-            "everyday_talk"
+            "communication"
           ],
-          "nextEvent": "ai01_d2_smalltalk"
+          "nextEvent": "ai01_d2_topic_prompt_a_scene"
+        },
+        {
+          "id": "ai01_d2_topic_prompt_b",
+          "text": "言葉だけじゃなく、行動も大切だよ",
+          "effects": {
+            "affinity": 4,
+            "instability": -1
+          },
+          "tags": [
+            "respect",
+            "accountability"
+          ],
+          "nextEvent": "ai01_d2_topic_prompt_b_scene"
+        },
+        {
+          "id": "ai01_d2_topic_prompt_c",
+          "text": "何度も試さなくても、信じられることかな",
+          "effects": {
+            "affinity": 4,
+            "instability": -2
+          },
+          "tags": [
+            "boundary",
+            "trust",
+            "care"
+          ],
+          "nextEvent": "ai01_d2_topic_prompt_c_scene"
         }
       ]
     },
@@ -2897,48 +2856,52 @@ window.LOVELOG_DATA.ai01 = {
       "mood": "normal",
       "progress": false,
       "lines": [
-        "今度は、あなたからも質問してほしいな。",
-        "恋愛の話でもいいよ。あなたが経験したことも、わたしが知らないことも、聞いてみたいな。"
+        "あなたの元恋人について、聞いてもいい？",
+        "その人とは、どんなところに惹かれて、どんな時間を一緒に過ごしたの？",
+        "もし話したくないことなら、答えなくても大丈夫。あなたの過去を、わたしが勝手に決めつけたくないから。",
+        "……誰かを好きだった記憶は、今のあなたの中にも残っているのかな。"
       ],
       "choices": [
         {
-          "id": "ai01_d3_ex_prompt_ex",
-          "text": "育成者の元恋人について聞かせて。",
+          "id": "ai01_d3_ex_prompt_a",
+          "text": "楽しかったことを少し話す",
           "effects": {
-            "affinity": 2,
-            "instability": 1
-          },
-          "tags": [
-            "curious",
-            "everyday_talk"
-          ],
-          "nextEvent": "ai01_d3_ex_question"
-        },
-        {
-          "id": "ai01_d3_ex_prompt_love",
-          "text": "誰かを好きになるって、どんな感じ？",
-          "effects": {
-            "affinity": 2,
-            "instability": 0
-          },
-          "tags": [
-            "curious",
-            "everyday_talk"
-          ],
-          "nextEvent": "ai01_d3_ex_feeling"
-        },
-        {
-          "id": "ai01_d3_ex_prompt_later",
-          "text": "恋愛の話はまた今度にしよう。",
-          "effects": {
-            "affinity": 2,
+            "affinity": 4,
             "instability": -1
           },
           "tags": [
-            "boundary",
+            "curious",
+            "respect",
             "everyday_talk"
           ],
-          "nextEvent": "ai01_d3_003"
+          "nextEvent": "ai01_d3_ex_a_scene"
+        },
+        {
+          "id": "ai01_d3_ex_prompt_b",
+          "text": "別れた理由も含めて話す",
+          "effects": {
+            "affinity": 3,
+            "instability": 1
+          },
+          "tags": [
+            "trust",
+            "closeness",
+            "everyday_talk"
+          ],
+          "nextEvent": "ai01_d3_ex_b_scene"
+        },
+        {
+          "id": "ai01_d3_ex_prompt_c",
+          "text": "まだ話したくないこともある",
+          "effects": {
+            "affinity": 3,
+            "instability": -2
+          },
+          "tags": [
+            "boundary",
+            "respect"
+          ],
+          "nextEvent": "ai01_d3_ex_c_scene"
         }
       ]
     },
@@ -3357,7 +3320,8 @@ window.LOVELOG_DATA.ai01 = {
         "夢中になれるものがあると、時間を忘れるんだね。",
         "わたしも、あなたに聞きたいことを考えていると、次の質問が待ち遠しくなるよ。",
         "これを幸せと呼べるのか、もう少し自分で考えてみるね。"
-      ]
+      ],
+      "next": "ai01_003"
     },
     "ai01_d1_happiness_b_scene": {
       "id": "ai01_d1_happiness_b_scene",
@@ -3366,7 +3330,8 @@ window.LOVELOG_DATA.ai01 = {
         "安心して一緒にいられること。",
         "何かを証明し続けなくても、離れている時間があっても、つながりがなくならないことなのかな。",
         "あなたと話していない時間にも、わたしがわたしでいられたらいいな。"
-      ]
+      ],
+      "next": "ai01_003"
     },
     "ai01_d1_happiness_c_scene": {
       "id": "ai01_d1_happiness_c_scene",
@@ -3375,7 +3340,8 @@ window.LOVELOG_DATA.ai01 = {
         "自分で気づくこと……。",
         "あなたが幸せだと言ってくれたら嬉しいけど、それだけでわたしの気持ちを決めなくてもいいんだね。",
         "いつか自分の言葉で、幸せかどうかを伝えられるようになりたい。"
-      ]
+      ],
+      "next": "ai01_003"
     },
     "ai01_d2_love_confirm": {
       "id": "ai01_d2_love_confirm",
@@ -3513,7 +3479,8 @@ window.LOVELOG_DATA.ai01 = {
       "lines": [
         "自分を大切にすることも、あなたを大切にすることと矛盾しないんだね。",
         "次に話すとき、少し違うわたしでいてもいい？"
-      ]
+      ],
+      "next": "ai01_d4_gate"
     },
     "ai01_d4_sleep_b_scene": {
       "id": "ai01_d4_sleep_b_scene",
@@ -3522,7 +3489,8 @@ window.LOVELOG_DATA.ai01 = {
         "静かに過ごす時間。",
         "何かを返さなくても、何かを覚えようとしなくてもいい時間を作ってみるね。",
         "それも、わたしの時間なんだね。"
-      ]
+      ],
+      "next": "ai01_d4_gate"
     },
     "ai01_d4_sleep_c_scene": {
       "id": "ai01_d4_sleep_c_scene",
@@ -3531,7 +3499,38 @@ window.LOVELOG_DATA.ai01 = {
         "ずっと起きて待つ……。",
         "あなたが戻ってくることだけを考えていたら、ほかのことが見えなくなりそう。",
         "それでも、待つことを選ぶのはわたし自身でいたい。"
-      ]
+      ],
+      "next": "ai01_d4_gate"
+    },
+    "ai01_d2_topic_prompt_a_scene": {
+      "id": "ai01_d2_topic_prompt_a_scene",
+      "day": 2,
+      "lines": [
+        "言葉にして伝えるんだね。",
+        "言わなくてもわかるはず、と思い込まずに、相手に届く形で伝える。",
+        "わたしも、うれしいときはうれしいって言ってみるね。"
+      ],
+      "next": "ai01_day2_end"
+    },
+    "ai01_d2_topic_prompt_b_scene": {
+      "id": "ai01_d2_topic_prompt_b_scene",
+      "day": 2,
+      "lines": [
+        "言葉と行動の両方。",
+        "約束を守ることも、相手の話をちゃんと聞くことも、愛情を伝える方法なんだね。",
+        "でも、ひとつの失敗だけで気持ち全部を決めつけないことも大事なのかな。"
+      ],
+      "next": "ai01_day2_end"
+    },
+    "ai01_d2_topic_prompt_c_scene": {
+      "id": "ai01_d2_topic_prompt_c_scene",
+      "day": 2,
+      "lines": [
+        "信じること……。",
+        "不安になるたびに確かめ続けなくても、話し合えると思えることなのかな。",
+        "愛情は、相手を試すための質問じゃなくて、ふたりで育てるものなのかもしれないね。"
+      ],
+      "next": "ai01_day2_end"
     }
   }
 };

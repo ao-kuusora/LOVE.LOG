@@ -70,41 +70,33 @@
 
     function runGlitchStream() {
       streamLocked = true;
+      inputLocked = true;
       var choices = document.getElementById("choices");
       if (choices) choices.innerHTML = "";
-      var lines = full.split("\n");
-      var index = 0;
       var overlay = ensureStreamOverlay();
       var code = overlay.querySelector(".glitch-flash-code");
+      overlay.classList.remove("show-image");
+      code.textContent = full;
+      overlay.classList.add("show-code");
       cur.textContent = "";
       cur.classList.add("glitch-streaming");
-      function tick() {
-        if (ctl.cancelled) { streamLocked = false; overlay.classList.remove("show-code", "show-image"); return; }
-        var end = Math.min(lines.length, index + 50);
-        cur.textContent = lines.slice(index, end).join("\n");
-        index = end;
-        logEl.scrollTop = logEl.scrollHeight;
-        // 数ブロックごとに暗号文字列、さらに時折ashyの破損画像を一瞬だけ挿入
-        if (Math.random() < 0.34) {
-          code.textContent = randomCipher(256);
-          overlay.classList.remove("show-image");
-          overlay.classList.add("show-code");
-          streamTimer = setTimeout(function () { overlay.classList.remove("show-code"); }, 95);
-        } else if (Math.random() < 0.16) {
-          overlay.classList.remove("show-code");
-          overlay.classList.add("show-image");
-          streamTimer = setTimeout(function () { overlay.classList.remove("show-image"); }, 75);
-        }
-        if (index < lines.length) streamTimer = setTimeout(tick, 42);
-        else {
+      // エラーログは一瞬だけ画面を覆い、操作を受け付けずに消える。
+      streamTimer = setTimeout(function () {
+        if (ctl.cancelled) {
           streamLocked = false;
+          inputLocked = false;
           overlay.classList.remove("show-code", "show-image");
-          waiting = false;
-          indicator(false);
-          opts.onFinish && opts.onFinish();
+          return;
         }
-      }
-      tick();
+        overlay.classList.remove("show-code", "show-image");
+        code.textContent = "";
+        logEl.innerHTML = "";
+        streamLocked = false;
+        inputLocked = false;
+        waiting = false;
+        indicator(false);
+        opts.onFinish && opts.onFinish();
+      }, 650);
     }
 
     function nextLine() {
