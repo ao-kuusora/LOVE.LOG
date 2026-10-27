@@ -2715,19 +2715,6 @@ window.LOVELOG_DATA.ai01 = {
             "everyday_talk"
           ],
           "nextEvent": "ai01_d2_smalltalk"
-        },
-        {
-          "id": "ai01_d2_topic_love_confirm",
-          "text": "人間はどうやって愛情を確かめ合うの？",
-          "effects": {
-            "affinity": 3,
-            "instability": 1
-          },
-          "tags": [
-            "curious",
-            "closeness"
-          ],
-          "nextEvent": "ai01_d2_love_confirm"
         }
       ]
     },
