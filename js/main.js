@@ -284,6 +284,9 @@
 
   function playEvent(route, id, depth) {
     var ev = Game.getEvent(route, id);
+    document.body.dataset.event = id || "";
+    var avatar = $("avatar");
+    if (avatar) avatar.dataset.glitchActive = (id === "ai01_015_end") ? "true" : "false";
     if (!ev || depth > Game.MAX_CHAIN) { failEvent(route, id); return; }
 
     // 日が進む瞬間は専用ページを挟み、ボタン操作で次日の会話を開始する。
@@ -341,7 +344,6 @@
     }
 
     if (r.choices.length) {
-      $("dialogue-next").hidden = true;
       $("dialogue-next").disabled = true;
       if (ev.autoAdvance) {
         var autoChoice = r.choices[0];
@@ -366,7 +368,7 @@
     if (r.lines.length && !ev.autoAdvance) {
       Game.markRead(route, ev);
       waitingNext = { route: route, eventId: next };
-      $("dialogue-next").textContent = "次へ →";
+      $("dialogue-next").textContent = "次のセリフ →";
       $("dialogue-next").hidden = false;
       $("dialogue-next").disabled = false;
     } else {
@@ -477,15 +479,16 @@
       playEvent(pending.route, pending.eventId, 0);
     }
     $("day-transition-start").addEventListener("click", startPendingDay);
-    $("dialogue-next").addEventListener("click", function () {
-      if (Dialogue.isLocked()) return;
+    function advanceDialogue() {
+      if (Dialogue.isLocked() || $("choices").children.length) return;
       if (waitingNext) {
         var next = waitingNext;
         waitingNext = null;
         $("dialogue-next").hidden = true;
         playEvent(next.route, next.eventId, 0);
       } else Dialogue.advance();
-    });
+    }
+    $("dialogue-next").addEventListener("click", advanceDialogue);
     $("dialogue-back").addEventListener("click", function () {
       if (Dialogue.isLocked()) return;
       if (Dialogue.canGoBack()) {
@@ -530,7 +533,7 @@
     });
 
     // クリック/タップでセリフ送り
-    $("log").addEventListener("click", function () { Dialogue.advance(); });
+    $("log").addEventListener("click", advanceDialogue);
     $("ending-log").addEventListener("click", function () { Dialogue.advance(); });
     $("caretaker-fate-log").addEventListener("click", function () { Dialogue.advance(); });
 

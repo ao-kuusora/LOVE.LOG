@@ -159,6 +159,9 @@
       cur = document.createElement("p");
       cur.className = "line mood-" + (line.mood || "normal");
       if (/^\[system\]/.test(full)) cur.classList.add("system");
+      if (full.indexOf("好きだよ") !== -1) {
+        cur.classList.add("love-confession", "love-size-" + (1 + Math.floor(Math.random() * 4)));
+      }
       if (line.className) String(line.className).split(/\s+/).forEach(function (name) { if (name) cur.classList.add(name); });
       logEl.querySelectorAll(".line.current").forEach(function (p) { p.classList.remove("current"); });
       cur.classList.add("current");
@@ -168,6 +171,8 @@
 
       var speed = SPEED_MS[settings().textSpeed];
       if (speed === undefined) speed = SPEED_MS.normal;
+      // 「好きだよ」が続く場面は、感情が押し寄せるよう表示を速める。
+      if (full.indexOf("好きだよ") !== -1) speed = Math.min(speed, 12);
 
       if (line.className && String(line.className).split(/\s+/).indexOf("glitch-dump") !== -1) { runGlitchStream(); return; }
       if (inputLocked) {

@@ -475,3 +475,26 @@ body.reduce-motion[data-glitch="true"] #screen-game .line.mood-broken.current { 
 #screen-game .choices { order:2; }
 #screen-game .dialogue-nav .btn { position:relative; z-index:2; }
 .avatar, .avatar * { animation: none !important; }
+
+/* 「好きだよ」の連続シーンは表示を速め、文字サイズをランダムに変化させる。 */
+.line.love-confession {
+  color: #ff5b91; font-weight: 800; line-height: 1.45;
+  text-shadow: 0 0 14px rgba(255, 75, 145, .2);
+  transform-origin: left center;
+}
+.line.love-size-1 { font-size: 1.05rem; }
+.line.love-size-2 { font-size: 1.35rem; }
+.line.love-size-3 { font-size: 1.75rem; }
+.line.love-size-4 { font-size: 2.15rem; letter-spacing: .04em; }
+
+/* 最終シーンでは、END07と同じ破損ashy画像を表示する。 */
+body[data-event="ai01_015_end"] .avatar[data-character="ashy"] .avatar-art-normal { opacity: 0; }
+body[data-event="ai01_015_end"] .avatar[data-character="ashy"] .avatar-art-glitch { display: none !important; }
+body[data-event="ai01_015_end"] .avatar[data-character="ashy"] .avatar-art-ending {
+  display: block; position: absolute; z-index: 4; top: 0; left: 50%;
+  width: 418px; max-width: none; height: auto;
+  transform: translateX(-50%); object-fit: contain; pointer-events: none;
+}
+@media (max-width: 720px) {
+  body[data-event="ai01_015_end"] .avatar[data-character="ashy"] .avatar-art-ending { width: 220px; }
+}
