@@ -304,10 +304,16 @@
     $("dialogue-back").disabled = eventHistory.length < 2;
 
     if (!r.lines.length) { afterLines(route, ev, r, depth + 1); return; }
+    $("dialogue-next").textContent = "次のセリフ →";
+    $("dialogue-next").hidden = false;
+    $("dialogue-back").disabled = true;
     Dialogue.play({
       logEl: $("log"),
       lines: r.lines,
       onMood: setMood,
+      onLineChange: function (index) {
+        $("dialogue-back").disabled = index <= 0 || Dialogue.isLocked();
+      },
       lockInput: ev.lockInput === true,
       onFinish: function () { afterLines(route, ev, r, 0); }
     });
@@ -473,7 +479,12 @@
       } else Dialogue.advance();
     });
     $("dialogue-back").addEventListener("click", function () {
-      if (Dialogue.isLocked() || eventHistory.length < 2) return;
+      if (Dialogue.isLocked()) return;
+      if (Dialogue.canGoBack()) {
+        Dialogue.back();
+        return;
+      }
+      if (eventHistory.length < 2) return;
       eventHistory.pop();
       var previous = eventHistory[eventHistory.length - 1];
       waitingNext = null;

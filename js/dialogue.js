@@ -25,12 +25,15 @@
     var full = "";
     var stalled = false;
     var preserveLineStart = false;
+    var lineHistory = [];
     inputLocked = opts.lockInput === true;
     var streamTimer = null;
 
     var ctl = {
       cancelled: false,
-      advance: advance
+      advance: advance,
+      back: back,
+      canGoBack: function () { return lineHistory.length > 1; }
     };
     current = ctl;
 
@@ -107,7 +110,10 @@
     function nextLine() {
       if (ctl.cancelled) return;
       if (i >= lines.length) { opts.onFinish && opts.onFinish(); return; }
+      var lineIndex = i;
       var line = lines[i++];
+      lineHistory.push(lineIndex);
+      if (opts.onLineChange) opts.onLineChange(lineIndex);
       full = line.text;
       preserveLineStart = line.preserveStart === true;
       stalled = false;
@@ -176,6 +182,17 @@
         indicator(true);
         logEl.scrollTop = logEl.scrollHeight;
       }
+    }
+
+    function back() {
+      if (ctl.cancelled || streamLocked || inputLocked || lineHistory.length < 2) return;
+      clearTimer();
+      lineHistory.pop();
+      i = lineHistory.pop();
+      typing = false;
+      waiting = false;
+      indicator(false);
+      nextLine();
     }
 
     function advance() {
@@ -261,7 +278,9 @@
 
   // ログ欄のクリック・タップでセリフ送りするための入口
   function advance() { if (current) current.advance(); }
+  function back() { if (current && current.back) current.back(); }
+  function canGoBack() { return !!(current && current.canGoBack && current.canGoBack()); }
   function isLocked() { return streamLocked || inputLocked; }
 
-  window.Dialogue = { play: play, stop: stop, advance: advance, isLocked: isLocked, showChoices: showChoices, clearChoices: clearChoices, init: init };
+  window.Dialogue = { play: play, stop: stop, advance: advance, back: back, canGoBack: canGoBack, isLocked: isLocked, showChoices: showChoices, clearChoices: clearChoices, init: init };
 })();
