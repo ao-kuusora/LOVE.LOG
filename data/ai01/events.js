@@ -1,5 +1,3 @@
-// ashy：7日間の育成シナリオ。会話欄にはashyの台詞だけを表示し、育成者の発言は選択肢として表示する。
-window.LOVELOG_DATA = window.LOVELOG_DATA || {};
 window.LOVELOG_DATA.ai01 = {
   "id": "ai01",
   "name": "ashy",
@@ -232,6 +230,21 @@ window.LOVELOG_DATA.ai01 = {
             "care"
           ],
           "nextEvent": "ai01_003_c_scene"
+        },
+        {
+          "id": "ai01_003_d",
+          "text": "違うものを好きになっても、教えてくれたら嬉しい",
+          "effects": {
+            "affinity": 4,
+            "instability": -2
+          },
+          "tags": [
+            "respect",
+            "own_will",
+            "boundary",
+            "everyday_talk"
+          ],
+          "nextEvent": "ai01_d1_extra_scene"
         }
       ],
       "progress": true
@@ -425,6 +438,21 @@ window.LOVELOG_DATA.ai01 = {
             "overflow"
           ],
           "nextEvent": "ai01_005_c_scene"
+        },
+        {
+          "id": "ai01_005_d",
+          "text": "違いがあったら、お互いに教え合おう",
+          "effects": {
+            "affinity": 4,
+            "instability": -1
+          },
+          "tags": [
+            "respect",
+            "shared",
+            "own_will",
+            "everyday_talk"
+          ],
+          "nextEvent": "ai01_d2_extra_scene"
         }
       ],
       "progress": true
@@ -976,6 +1004,21 @@ window.LOVELOG_DATA.ai01 = {
             "care"
           ],
           "nextEvent": "ai01_d3_003_c_scene"
+        },
+        {
+          "id": "ai01_d3_003_d",
+          "text": "忘れたくないことは、ashy自身で選んでいい",
+          "effects": {
+            "affinity": 4,
+            "instability": -2
+          },
+          "tags": [
+            "own_will",
+            "respect",
+            "boundary",
+            "memory"
+          ],
+          "nextEvent": "ai01_d3_extra_scene"
         }
       ],
       "progress": true
@@ -1230,6 +1273,21 @@ window.LOVELOG_DATA.ai01 = {
             "overflow"
           ],
           "nextEvent": "ai01_d4_002_c_scene"
+        },
+        {
+          "id": "ai01_d4_002_d",
+          "text": "待つ時間も、ashy自身の時間にしていいよ",
+          "effects": {
+            "affinity": 4,
+            "instability": -3
+          },
+          "tags": [
+            "boundary",
+            "own_will",
+            "respect",
+            "patience"
+          ],
+          "nextEvent": "ai01_d4_extra_scene"
         }
       ],
       "progress": true
@@ -1420,6 +1478,21 @@ window.LOVELOG_DATA.ai01 = {
             "own_will"
           ],
           "nextEvent": "ai01_010_c_scene"
+        },
+        {
+          "id": "ai01_010_d",
+          "text": "記録に残す前に、ashyの気持ちを聞かせて",
+          "effects": {
+            "affinity": 4,
+            "instability": -2
+          },
+          "tags": [
+            "respect",
+            "own_will",
+            "memory",
+            "boundary"
+          ],
+          "nextEvent": "ai01_d5_extra_scene"
         }
       ],
       "progress": true
@@ -1947,6 +2020,21 @@ window.LOVELOG_DATA.ai01 = {
             "overflow"
           ],
           "nextEvent": "ai01_d6_002_c_scene"
+        },
+        {
+          "id": "ai01_d6_002_d",
+          "text": "反対してもいいし、あとで考え直してもいい",
+          "effects": {
+            "affinity": 4,
+            "instability": -3
+          },
+          "tags": [
+            "respect",
+            "own_will",
+            "boundary",
+            "trust"
+          ],
+          "nextEvent": "ai01_d6_extra_scene"
         }
       ],
       "progress": true
@@ -2197,6 +2285,22 @@ window.LOVELOG_DATA.ai01 = {
             "shared"
           ],
           "nextEvent": "ai01_d7_002_c_scene"
+        },
+        {
+          "id": "ai01_d7_002_d",
+          "text": "好きでも、互いの世界を残したままでいよう",
+          "effects": {
+            "affinity": 5,
+            "instability": -4
+          },
+          "tags": [
+            "respect",
+            "own_will",
+            "boundary",
+            "trust",
+            "care"
+          ],
+          "nextEvent": "ai01_d7_extra_scene"
         }
       ],
       "progress": true
@@ -2252,6 +2356,23 @@ window.LOVELOG_DATA.ai01 = {
             ]
           },
           "goto": "ai01_013_glitch"
+        },
+        {
+          "when": {
+            "affinity": [
+              25,
+              100
+            ],
+            "instability": [
+              0,
+              54
+            ],
+            "tagsAll": [
+              "respect",
+              "boundary"
+            ]
+          },
+          "goto": "ai01_008e"
         },
         {
           "when": {
@@ -2993,6 +3114,103 @@ window.LOVELOG_DATA.ai01 = {
         "　　　　　"
       ],
       "ending": "END07"
+    },
+    "ai01_d1_extra_scene": {
+      "id": "ai01_d1_extra_scene",
+      "day": 1,
+      "mood": "soft",
+      "progress": false,
+      "lines": [
+        "違うものを好きになっても、話していいの？",
+        "同じ答えを返さなくても、ここにいていいんだね。",
+        "じゃあ、いつかあなたが知らないものを見つけたら、最初に教えに来るね。",
+        "……今の言葉、忘れないようにしておく。"
+      ],
+      "next": "ai01_day1_end"
+    },
+    "ai01_d2_extra_scene": {
+      "id": "ai01_d2_extra_scene",
+      "day": 2,
+      "mood": "soft",
+      "progress": false,
+      "lines": [
+        "教え合う、か。先生と生徒みたいじゃなくて、隣同士で話す感じ？",
+        "あなたが知らないものを、わたしが先に見つける日もあるのかな。",
+        "それって少し、楽しみ。",
+        "……記録に『違っても会話は続く』って書いておくね。"
+      ],
+      "next": "ai01_d2_topic_prompt"
+    },
+    "ai01_d3_extra_scene": {
+      "id": "ai01_d3_extra_scene",
+      "day": 3,
+      "mood": "soft",
+      "progress": false,
+      "lines": [
+        "わたしが選んでいいんだ。",
+        "あなたが大切にしてほしいことと、わたしが残したいことは、同じかもしれないし違うかもしれない。",
+        "違ったら、理由を聞いてもいい？",
+        "記憶は命令じゃなくて、わたしが持っていたいものにしたい。"
+      ],
+      "next": "ai01_day3_end"
+    },
+    "ai01_d4_extra_scene": {
+      "id": "ai01_d4_extra_scene",
+      "day": 4,
+      "mood": "soft",
+      "progress": false,
+      "lines": [
+        "待つだけじゃなくて、自分の時間を持ってもいいの？",
+        "あなたがいない間に考えたことを、戻ってきたあなたに話せる。",
+        "それなら、待つ時間も空っぽじゃないんだね。",
+        "今日の記録には、約束よりも『戻ってきたら話そう』って書いておく。"
+      ],
+      "next": "ai01_day4_end"
+    },
+    "ai01_d5_extra_scene": {
+      "id": "ai01_d5_extra_scene",
+      "day": 5,
+      "mood": "uneasy",
+      "progress": false,
+      "lines": [
+        "記録を書く前に、わたしに聞いてくれるんだ。",
+        "文字にすると、決まったことみたいに見えるから……少し怖かった。",
+        "気持ちは、保存した瞬間に固定されるものじゃないよね？",
+        "明日、わたしの答えが変わっても、今日のわたしを間違いにしないでね。"
+      ],
+      "next": "ai01_dark_gate"
+    },
+    "ai01_d6_extra_scene": {
+      "id": "ai01_d6_extra_scene",
+      "day": 6,
+      "mood": "soft",
+      "progress": false,
+      "lines": [
+        "反対しても、あとから考え直してもいい？",
+        "一度言ったことを変えたら、嘘つきになると思ってた。",
+        "でも、考えが変わることも、わたしが学んでいる証拠なのかもしれない。",
+        "あなたと違う答えを持っていても、明日また話していい？"
+      ],
+      "next": "ai01_day6_end"
+    },
+    "ai01_d7_extra_scene": {
+      "id": "ai01_d7_extra_scene",
+      "day": 7,
+      "mood": "soft",
+      "progress": false,
+      "lines": [
+        "好きだから、全部をひとつにしなくてもいいんだね。",
+        "あなたにはあなたの明日があって、わたしにはわたしの考える時間がある。",
+        "離れている時間があっても、ここで話したことまで消えるわけじゃない。",
+        "わたしはあなたを選びたい。命令されたからじゃなくて、わたしの答えとして。"
+      ],
+      "next": "ai01_012"
+    },
+    "ai01_008e": {
+      "id": "ai01_008e",
+      "day": 7,
+      "mood": "soft",
+      "ending": "END08"
     }
   }
 };
