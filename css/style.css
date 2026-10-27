@@ -467,3 +467,11 @@ body.reduce-motion[data-glitch="true"] #screen-game .line.mood-broken.current { 
 .dialogue-nav { display:flex; justify-content:space-between; gap:10px; margin-top:12px; }
 .dialogue-nav [hidden] { display:none !important; }
 .dialogue-nav .btn { min-width:104px; }
+
+/* 会話操作を選択肢より上に配置し、連打による誤選択を防ぐ */
+#screen-game .talk { display:flex; flex-direction:column; }
+#screen-game .dialogue-nav { order:0; margin:0 0 12px; justify-content:flex-end; }
+#screen-game .log { order:1; }
+#screen-game .choices { order:2; }
+#screen-game .dialogue-nav .btn { position:relative; z-index:2; }
+.avatar, .avatar * { animation: none !important; }

@@ -342,6 +342,15 @@
 
     if (r.choices.length) {
       $("dialogue-next").hidden = true;
+      $("dialogue-next").disabled = true;
+      if (ev.autoAdvance) {
+        var autoChoice = r.choices[0];
+        var autoResult = Game.choose(route, ev, autoChoice.id);
+        updateHud(route);
+        if (!autoResult.ok || !autoResult.nextId) { failEvent(route, autoResult.nextId); return; }
+        playEvent(route, autoResult.nextId, depth + 1);
+        return;
+      }
       Dialogue.showChoices($("choices"), r.choices, function (c) {
         var res = Game.choose(route, ev, c.id);
         updateHud(route);
@@ -354,13 +363,12 @@
     var next = Game.nextFor(route, ev);
     if (!next) { failEvent(route, null); return; }
 
-    if (r.lines.length) {
-      // セリフだけのイベントは自動で進めず、プレイヤーが「次へ」を押すまで待つ。
+    if (r.lines.length && !ev.autoAdvance) {
       Game.markRead(route, ev);
       waitingNext = { route: route, eventId: next };
       $("dialogue-next").textContent = "次へ →";
       $("dialogue-next").hidden = false;
-      $("dialogue-next").focus({ preventScroll: true });
+      $("dialogue-next").disabled = false;
     } else {
       Game.markRead(route, ev);
       playEvent(route, next, depth); // 条件分岐だけのイベントは自動で進む

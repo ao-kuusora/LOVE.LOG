@@ -86,7 +86,8 @@
           streamLocked = false;
           inputLocked = false;
           overlay.classList.remove("show-code", "show-image");
-          cur.style.visibility = "";
+          cur.textContent = "";
+          cur.style.visibility = "hidden";
           return;
         }
 
@@ -129,7 +130,8 @@
             inputLocked = false;
             overlay.classList.remove("show-code", "show-image");
             code.textContent = "";
-            cur.style.visibility = "";
+            cur.textContent = "";
+            cur.style.visibility = "hidden";
             waiting = false;
             indicator(false);
             opts.onFinish && opts.onFinish();
@@ -251,7 +253,7 @@
   function stop() {
     streamLocked = false;
     inputLocked = false;
-    if (streamOverlay) streamOverlay.classList.remove("show-code", "show-image");
+    if (streamOverlay) { streamOverlay.classList.remove("show-code", "show-image"); var code = streamOverlay.querySelector(".glitch-flash-code"); if (code) code.textContent = ""; }
     if (current) current.cancelled = true;
     current = null;
   }
