@@ -80,6 +80,35 @@
 
     Save.ROUTES.forEach(function (route) {
       var d = D[route];
+
+      // 現在は ashy ルートを集中して制作中。brunshy / yao は予告カードとして表示する。
+      if (route !== "ai01") {
+        var soonCard = document.createElement("article");
+        soonCard.className = "card coming-soon-card";
+        soonCard.setAttribute("aria-label", d.name + " Coming Soon");
+        var soonLabel = document.createElement("p");
+        soonLabel.className = "coming-soon-label";
+        soonLabel.textContent = "COMING SOON";
+        soonCard.appendChild(soonLabel);
+        var soonName = document.createElement("h3");
+        soonName.textContent = d.name;
+        soonCard.appendChild(soonName);
+        var soonTheme = document.createElement("p");
+        soonTheme.className = "theme";
+        soonTheme.textContent = d.theme;
+        soonCard.appendChild(soonTheme);
+        var soonNote = document.createElement("p");
+        soonNote.className = "coming-soon-note";
+        soonNote.textContent = "このルートは準備中です。まずは ashy の物語を深く育てていきます。";
+        soonCard.appendChild(soonNote);
+        var soonStamp = document.createElement("span");
+        soonStamp.className = "coming-soon-stamp";
+        soonStamp.textContent = "UNDER CONSTRUCTION";
+        soonCard.appendChild(soonStamp);
+        list.appendChild(soonCard);
+        return;
+      }
+
       var ai = st.ais[route];
       var unlocked = Game.isUnlocked(route);
       var card = document.createElement("div");
