@@ -478,8 +478,8 @@ body.reduce-motion[data-glitch="true"] #screen-game .line.mood-broken.current { 
 
 /* 「好きだよ」の連続シーンは表示を速め、文字サイズをランダムに変化させる。 */
 .line.love-confession {
-  color: #ff5b91; font-weight: 800; line-height: 1.45;
-  text-shadow: 0 0 14px rgba(255, 75, 145, .2);
+  color: #ff1528 !important; font-weight: 800; line-height: 1.45;
+  text-shadow: 0 0 14px rgba(255, 21, 40, .35);
   transform-origin: left center;
 }
 .line.love-size-1 { font-size: 1.05rem; }

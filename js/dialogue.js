@@ -171,8 +171,9 @@
 
       var speed = SPEED_MS[settings().textSpeed];
       if (speed === undefined) speed = SPEED_MS.normal;
-      // 「好きだよ」が続く場面は、感情が押し寄せるよう表示を速める。
-      if (full.indexOf("好きだよ") !== -1) speed = Math.min(speed, 12);
+      // 「好きだよ」は1文字ずつ、間を詰めて高速表示する。
+      var isLoveLine = full.indexOf("好きだよ") !== -1;
+      if (isLoveLine) speed = Math.min(speed, 4);
 
       if (line.className && String(line.className).split(/\s+/).indexOf("glitch-dump") !== -1) { runGlitchStream(); return; }
       if (inputLocked) {
@@ -217,6 +218,11 @@
       if (i >= lines.length) {
         indicator(false);
         opts.onFinish && opts.onFinish();
+      } else if (cur && cur.classList.contains("love-confession") && lines[i] && String(lines[i].text || "").indexOf("好きだよ") !== -1) {
+        // 「好きだよ」が連続する間はクリック待ちを挟まず、次の1文字ずつ表示へ。
+        waiting = false;
+        indicator(false);
+        timer = setTimeout(function () { if (!ctl.cancelled) nextLine(); }, 35);
       } else {
         waiting = true;
         indicator(true);
