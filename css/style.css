@@ -461,3 +461,9 @@ body.reduce-motion[data-glitch="true"] #screen-game .line.mood-broken.current { 
   font: 700 .65rem/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
   letter-spacing: .12em;
 }
+
+
+/* 会話の手動ナビゲーション */
+.dialogue-nav { display:flex; justify-content:space-between; gap:10px; margin-top:12px; }
+.dialogue-nav [hidden] { display:none !important; }
+.dialogue-nav .btn { min-width:104px; }

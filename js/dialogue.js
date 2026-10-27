@@ -7,6 +7,7 @@
   var current = null;      // 再生中のセリフ制御
   var choiceState = null;  // 表示中の選択肢
   var streamLocked = false;
+  var inputLocked = false;
   var streamOverlay = null;
 
   function settings() { return Save.state.settings; }
@@ -24,6 +25,7 @@
     var full = "";
     var stalled = false;
     var preserveLineStart = false;
+    inputLocked = opts.lockInput === true;
     var streamTimer = null;
 
     var ctl = {
@@ -127,6 +129,17 @@
       if (speed === undefined) speed = SPEED_MS.normal;
 
       if (line.className && String(line.className).split(/\s+/).indexOf("glitch-dump") !== -1) { runGlitchStream(); return; }
+      if (inputLocked) {
+        cur.textContent = full;
+        logEl.scrollTop = logEl.scrollHeight;
+        typing = false;
+        timer = setTimeout(function lockedLineAdvance() {
+          if (ctl.cancelled) return;
+          if (i < lines.length) nextLine();
+          else { waiting = false; indicator(false); opts.onFinish && opts.onFinish(); }
+        }, line.mood === "broken" ? 1150 : 850);
+        return;
+      }
       if (speed === 0 || line.instant) { cur.textContent = full; lineDone(); return; }
 
       typing = true;
@@ -166,7 +179,7 @@
     }
 
     function advance() {
-      if (ctl.cancelled || streamLocked) return;
+      if (ctl.cancelled || streamLocked || inputLocked) return;
       if (typing) { // タイプ中に押されたら全文を即表示
         clearTimer();
         cur.textContent = full;
@@ -187,6 +200,7 @@
 
   function stop() {
     streamLocked = false;
+    inputLocked = false;
     if (streamOverlay) streamOverlay.classList.remove("show-code", "show-image");
     if (current) current.cancelled = true;
     current = null;
@@ -236,7 +250,7 @@
         if (btn) { e.preventDefault(); btn.click(); }
         return;
       }
-      if (streamLocked) { e.preventDefault(); e.stopPropagation(); return; }
+      if (streamLocked || inputLocked) { e.preventDefault(); e.stopPropagation(); return; }
       if (current && (e.key === "Enter" || e.key === " " || e.key === "ArrowRight")) {
         if (tag === "BUTTON" && !(e.target.classList && e.target.classList.contains("log"))) return;
         e.preventDefault();
@@ -247,6 +261,7 @@
 
   // ログ欄のクリック・タップでセリフ送りするための入口
   function advance() { if (current) current.advance(); }
+  function isLocked() { return streamLocked || inputLocked; }
 
-  window.Dialogue = { play: play, stop: stop, advance: advance, showChoices: showChoices, clearChoices: clearChoices, init: init };
+  window.Dialogue = { play: play, stop: stop, advance: advance, isLocked: isLocked, showChoices: showChoices, clearChoices: clearChoices, init: init };
 })();

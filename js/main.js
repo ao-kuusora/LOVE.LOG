@@ -11,6 +11,9 @@
   var pendingEnding = null; // ストーリー終了後、ユーザーがエンディングへ進むまで保持する
   var activeDay = null;     // ashyルートの現在日
   var pendingDayEvent = null; // 次の日の開始まで保留しているイベント
+  var eventHistory = [];
+  var replayingHistory = false;
+  var waitingNext = null;
   var GLITCH_THRESHOLD = 50; // 不安定さが50を超えたら翌日の開始時にノイズ化
 
   function $(id) { return document.getElementById(id); }
@@ -181,6 +184,9 @@
     gameRoute = route;
     activeDay = null;
     pendingDayEvent = null;
+    eventHistory = [];
+    replayingHistory = false;
+    waitingNext = null;
     $("hud-day").hidden = true;
     $("avatar").dataset.glitchActive = "false";
     $("log").innerHTML = "";
@@ -286,17 +292,23 @@
       return;
     }
 
+    if (!replayingHistory && (!eventHistory.length || eventHistory[eventHistory.length - 1].id !== id)) eventHistory.push({ route: route, id: id });
+    replayingHistory = false;
     Game.enter(route, id);
     renderDayMarker(route, ev.day);
     var r = Game.resolveEvent(route, ev);
     updateHud(route);
     Dialogue.clearChoices($("choices"));
+    $("dialogue-next").hidden = true;
+    $("dialogue-next").disabled = false;
+    $("dialogue-back").disabled = eventHistory.length < 2;
 
     if (!r.lines.length) { afterLines(route, ev, r, depth + 1); return; }
     Dialogue.play({
       logEl: $("log"),
       lines: r.lines,
       onMood: setMood,
+      lockInput: ev.lockInput === true,
       onFinish: function () { afterLines(route, ev, r, 0); }
     });
   }
@@ -323,6 +335,7 @@
     }
 
     if (r.choices.length) {
+      $("dialogue-next").hidden = true;
       Dialogue.showChoices($("choices"), r.choices, function (c) {
         var res = Game.choose(route, ev, c.id);
         updateHud(route);
@@ -336,12 +349,12 @@
     if (!next) { failEvent(route, null); return; }
 
     if (r.lines.length) {
-      // セリフだけのイベントはボタンを挟まず、自動で次の会話へ進む。
-      // 少し間を置き、上書き表示されたセリフを読む時間を確保する。
+      // セリフだけのイベントは自動で進めず、プレイヤーが「次へ」を押すまで待つ。
       Game.markRead(route, ev);
-      window.setTimeout(function () {
-        if (!document.getElementById("screen-game").hidden) playEvent(route, next, 0);
-      }, 850);
+      waitingNext = { route: route, eventId: next };
+      $("dialogue-next").textContent = "次へ →";
+      $("dialogue-next").hidden = false;
+      $("dialogue-next").focus({ preventScroll: true });
     } else {
       Game.markRead(route, ev);
       playEvent(route, next, depth); // 条件分岐だけのイベントは自動で進む
@@ -450,6 +463,25 @@
       playEvent(pending.route, pending.eventId, 0);
     }
     $("day-transition-start").addEventListener("click", startPendingDay);
+    $("dialogue-next").addEventListener("click", function () {
+      if (Dialogue.isLocked()) return;
+      if (waitingNext) {
+        var next = waitingNext;
+        waitingNext = null;
+        $("dialogue-next").hidden = true;
+        playEvent(next.route, next.eventId, 0);
+      } else Dialogue.advance();
+    });
+    $("dialogue-back").addEventListener("click", function () {
+      if (Dialogue.isLocked() || eventHistory.length < 2) return;
+      eventHistory.pop();
+      var previous = eventHistory[eventHistory.length - 1];
+      waitingNext = null;
+      replayingHistory = true;
+      Dialogue.stop();
+      Dialogue.clearChoices($("choices"));
+      playEvent(previous.route, previous.id, 0);
+    });
     $("game-back").addEventListener("click", showTitle); // 進行は選択のたびに保存済み
 
     $("endings-back").addEventListener("click", function () { backTo(returnTo); });

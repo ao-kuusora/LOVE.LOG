@@ -2515,7 +2515,8 @@ window.LOVELOG_DATA.ai01 = {
           ],
           "nextEvent": "ai01_013_glitch_loop1"
         }
-      ]
+      ],
+      "lockInput": true
     },
     "ai01_014_dump": {
       "id": "ai01_014_dump",
